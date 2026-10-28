@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الشارع الكبير - منصة المحلات التجارية المتكاملة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0f172a;
+            --street-color: #1e293b;
+            --street-line: #f59e0b;
+            --card-bg: rgba(30, 41, 59, 0.95);
+            --card-border: #334155;
+            --accent-gold: #f59e0b;
+            --text-main: #ffffff;
+            --text-sub: #94a3b8;
+            --btn-bg: linear-gradient(135deg, #f59e0b, #d97706);
+            --btn-text: #000000;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 50px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Top Bar & Header */
+        .master-navbar {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--accent-gold);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .brand-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-admin-master {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+        .btn-admin-master:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+        /* Main Street Layout */
+        .street-container {
+            width: 100%;
+            max-width: 1100px;
+            padding: 25px 15px;
+            margin-top: 10px;
+        }
+
+        .street-grid {
+            display: grid;
+            grid-template-columns: 1fr 70px 1fr;
+            gap: 20px;
+            position: relative;
+        }
+
+        .street-road {
+            background: var(--street-color);
+            border-left: 4px dashed var(--street-line);
+            border-right: 4px dashed var(--street-line);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+        }
+
+        .street-road::after {
+            content: "⬇ ⬆";
+            color: var(--street-line);
+            font-size: 1.4rem;
+            font-weight: 900;
+            writing-mode: vertical-rl;
+            letter-spacing: 15px;
+            opacity: 0.7;
+        }
+
+        .street-column {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* World Class Shop Card */
+        .shop-card {
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .shop-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 15px 35px rgba(245, 158, 11, 0.25);
+        }
+
+        /* Top 1/3 Banner Box */
+        .shop-banner-box {
+            width: 100%;
+            height: 120px;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .shop-banner-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .shop-card:hover .shop-banner-box img {
+            transform: scale(1.08);
+        }
+
+        .shop-status-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            backdrop-filter: blur(4px);
+        }
+        .badge-active { background: rgba(16, 185, 129, 0.85); color: #fff; }
+        .badge-paused { background: rgba(239, 68, 68, 0.85); color: #fff; }
+
+        .shop-body {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .shop-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .shop-desc {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            line-height: 1.4;
+            margin-bottom: 15px;
+            min-height: 38px;
+        }
+
+        .btn-enter-shop {
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            font-weight: 800;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-enter-shop:hover {
+            filter: brightness(1.15);
+            transform: scale(1.02);
+        }
+
+        /* Modal Overlay & App Drawer */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .app-window-modal {
+            width: 100%;
+            max-width: 480px;
+            height: 94vh;
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .app-window-header {
+            background: #1e293b;
+            color: #fff;
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .close-app-btn {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: #fff;
+            font-size: 1.1rem;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.2s;
+        }
+        .close-app-btn:hover { background: #ef4444; }
+
+        /* Master Control Panel Drawer */
+        .cp-container {
+            width: 100%;
+            max-width: 850px;
+            max-height: 90vh;
+            background: #1e293b;
+            color: #fff;
+            border-radius: 16px;
+            overflow-y: auto;
+            padding: 25px;
+            border: 1px solid #334155;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .cp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .cp-section {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+        }
+
+        .cp-section h3 {
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 0.85rem; color: #cbd5e1; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 9px;
+            background: #1e293b;
+            border: 1px solid #475569;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .btn-action-cp {
+            background: #10b981;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .btn-action-cp:hover { filter: brightness(1.1); }
+        .btn-danger-cp { background: #ef4444; }
+        .btn-warning-cp { background: #f59e0b; color:#000; }
+
+        /* Store List Table inside CP */
+        .store-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+        .store-table th, .store-table td {
+            padding: 10px;
+            border: 1px solid #334155;
+            text-align: center;
+        }
+        .store-table th { background: #1e293b; color: var(--accent-gold); }
+
+        @media (max-width: 768px) {
+            .street-grid { grid-template-columns: 1fr 40px 1fr; gap: 10px; }
+            .shop-banner-box { height: 90px; }
+            .shop-title { font-size: 0.95rem; }
+            .shop-desc { font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Master Navbar -->
+    <div class="master-navbar">
+        <div class="brand-title">
+            <span>🏪</span>
+            <span>الشارع الكبير</span>
+        </div>
+        <button class="btn-admin-master" onclick="openMasterLogin()">
+            <span>⚙️</span>
+            <span>لوحة تحكم المشروع</span>
+        </button>
+    </div>
+
+    <!-- Main Street Section -->
+    <div class="street-container">
+        <div class="street-grid">
+            
+            <!-- Right Side Shops -->
+            <div class="street-column" id="right-column-shops"></div>
+
+            <!-- Central Road -->
+            <div class="street-road"></div>
+
+            <!-- Left Side Shops -->
+            <div class="street-column" id="left-column-shops"></div>
+
+        </div>
+    </div>
+
+    <!-- App Window Modal (Renders Individual Store App) -->
+    <div class="modal-backdrop" id="app-modal">
+        <div class="app-window-modal">
+            <div class="app-window-header">
+                <span id="app-modal-title">تطبيق المحل</span>
+                <button class="close-app-btn" onclick="closeAppModal()">✕</button>
+            </div>
+            <iframe id="app-iframe" style="width:100%; height:100%; border:none;"></iframe>
+        </div>
+    </div>
+
+    <!-- Master Control Panel Modal -->
+    <div class="modal-backdrop" id="master-cp-modal">
+        <div class="cp-container">
+            <div class="cp-header">
+                <h2>⚙️ لوحة تحكم مدير المشروع (الشارع الكبير)</h2>
+                <button class="close-app-btn" onclick="closeMasterCP()">✕</button>
+            </div>
+
+            <!-- 1. Design & Color Customization -->
+            <div class="cp-section">
+                <h3>🎨 تخصيص ألوان وواجهة المشروع</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>لون خلفية الشارع الرئيسية:</label>
+                        <input type="color" id="cp-color-bg" value="#0f172a">
+                    </div>
+                    <div class="form-group">
+                        <label>لون الشارع الأوسط:</label>
+                        <input type="color" id="cp-color-street" value="#1e293b">
+                    </div>
+                    <div class="form-group">
+                        <label>لون خطوط الشارع والتمييز:</label>
+                        <input type="color" id="cp-color-accent" value="#f59e0b">
+                    </div>
+                    <div class="form-group">
+                        <label>لون خلفية كروت المحلات:</label>
+                        <input type="color" id="cp-color-card" value="#1e293b">
+                    </div>
+                </div>
+                <button class="btn-action-cp" onclick="saveThemeSettings()">حفظ ألوان الواجهة 🖌️</button>
+            </div>
+
+            <!-- 2. Security & Passwords -->
+            <div class="cp-section">
+                <h3>🔑 أمان وسرية المشروع</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>كلمة سر لوحة تحكم مدير المشروع:</label>
+                        <input type="text" id="cp-master-pass">
+                    </div>
+                </div>
+                <button class="btn-action-cp btn-warning-cp" onclick="saveMasterPass()">تحديث كلمة سر المدير 🔐</button>
+            </div>
+
+            <!-- 3. Add New Shop -->
+            <div class="cp-section">
+                <h3>➕ إضافة محل جديد للشارع التجاري</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>اسم المحل:</label>
+                        <input type="text" id="new-shop-name" placeholder="مثال: مطعم البرنس">
+                    </div>
+                    <div class="form-group">
+                        <label>الصف (اليمين/الشمال):</label>
+                        <select id="new-shop-side">
+                            <option value="right">الصف الأيمن</option>
+                            <option value="left">الصف الأيسر</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>رابط البنر العلوي:</label>
+                        <input type="text" id="new-shop-banner" placeholder="رابط صورة البنر...">
+                    </div>
+                    <div class="form-group">
+                        <label>وصف المحل:</label>
+                        <input type="text" id="new-shop-desc" placeholder="وصف مختصر للنشاط...">
+                    </div>
+                    <div class="form-group">
+                        <label>نص زر الدخول:</label>
+                        <input type="text" id="new-shop-btn" value="دخول المحل 🏬">
+                    </div>
+                </div>
+                <button class="btn-action-cp" onclick="addNewShop()">إضافة المحل للشارع 🚀</button>
+            </div>
+
+            <!-- 4. Manage Shops List & Order -->
+            <div class="cp-section">
+                <h3>📋 إدارة وتعديل ترتيب المحلات والحالة</h3>
+                <div style="overflow-x:auto;">
+                    <table class="store-table">
+                        <thead>
+                            <tr>
+                                <th>المحل</th>
+                                <th>الصف</th>
+                                <th>كلمة السر الخاصة</th>
+                                <th>الحالة</th>
+                                <th>الترتيب</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cp-shops-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 5. Edit Selected Shop -->
+            <div class="cp-section" id="edit-shop-box" style="display:none;">
+                <h3>✏️ تعديل تفاصيل المحل المحدد (<span id="edit-shop-title-label"></span>)</h3>
+                <input type="hidden" id="edit-shop-id">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>اسم المحل:</label>
+                        <input type="text" id="edit-shop-name">
+                    </div>
+                    <div class="form-group">
+                        <label>الصف:</label>
+                        <select id="edit-shop-side">
+                            <option value="right">الصف الأيمن</option>
+                            <option value="left">الصف الأيسر</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>رابط البنر العلوي:</label>
+                        <input type="text" id="edit-shop-banner">
+                    </div>
+                    <div class="form-group">
+                        <label>وصف المحل:</label>
+                        <input type="text" id="edit-shop-desc">
+                    </div>
+                    <div class="form-group">
+                        <label>نص زر الدخول:</label>
+                        <input type="text" id="edit-shop-btn">
+                    </div>
+                    <div class="form-group">
+                        <label>كلمة سر تحكم التطبيق:</label>
+                        <input type="text" id="edit-shop-pass">
+                    </div>
+                    <div class="form-group">
+                        <label>حالة المحل:</label>
+                        <select id="edit-shop-status">
+                            <option value="active">يعمل بشكل طبيعي</option>
+                            <option value="paused">متوقف مؤقتاً (صيانة)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label>رسالة الإيقاف المؤقت (تظهر عند الدخول):</label>
+                        <input type="text" id="edit-shop-pause-msg">
+                    </div>
+                </div>
+                <button class="btn-action-cp" onclick="saveShopEdit()">حفظ تعديلات المحل 💾</button>
+                <button class="btn-action-cp btn-danger-cp" onclick="cancelShopEdit()">إلغاء</button>
+            </div>
+
+        </div>
+    </div>
+
+<script>
+    // البيانات الافتراضية الشاملة للمشروع (المحلات الستة الأساسية + الألوان)
+    const initialProjectData = {
+        masterPass: "master",
+        theme: {
+            bg: "#0f172a",
+            street: "#1e293b",
+            accent: "#f59e0b",
+            card: "#1e293b"
+        },
+        shops: [
+            { id: "shop1", name: "كشري وطواجن الونش", side: "right", banner: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80", desc: "أشهى أطباق الكشري والطواجن المصرية بأسعار زمان!", btnText: "اطلب أكلتك الآن 🍲", pass: "imo", status: "active", pauseMsg: "المحل مغلق حالياً للصيانة، نعود إليكم قريباً!" },
+            { id: "shop2", name: "سوبر ماركت الجمل", side: "left", banner: "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=600&q=80", desc: "جميع المنتجات الغذائية والمستلزمات المنزلية بأسعار الجملة.", btnText: "تسوق المنتجات 🛒", pass: "imo", status: "active", pauseMsg: "المتجر مغلق للجرد السنوي." },
+            { id: "shop3", name: "الجمل ستورز للبويات", side: "right", banner: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80", desc: "أجود أنواع الدهانات، الديكورات، ومستلزمات المعمار.", btnText: "تصفح الكتالوج 🎨", pass: "imo", status: "active", pauseMsg: "جاري تحديث قائمة الأسعار." },
+            { id: "shop4", name: "أكاديمية فيزا", side: "left", banner: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80", desc: "خدمات تعليمية، كورسات تدريبية، واستشارات أكاديمية.", btnText: "احجز كورس الآن 🎓", pass: "imo", status: "active", pauseMsg: "باب التسجيل مغلق مؤقتاً." },
+            { id: "shop5", name: "المركز الدولي للدواجن", side: "right", banner: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=600&q=80", desc: "مستلزمات مزارع الدواجن، الأعلاف، والتحصينات البيطرية.", btnText: "طلب مستلزمات 🐔", pass: "imo", status: "active", pauseMsg: "جاري استلام شحنة جديدة." },
+            { id: "shop6", name: "Special Fashion", side: "left", banner: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80", desc: "أحدث صيحات الموضة والملابس الحريمي والرجالي.", btnText: "تصفح الموديلات 👗", pass: "imo", status: "active", pauseMsg: "المحل مغلق لتجهيز تشكيلة الموسم." }
+        ]
+    };
+
+    // تحميل أو تهيئة بيانات المشروع
+    function getProjectData() {
+        let data = localStorage.getItem("al_share3_al_kabeer_master_v1");
+        if(!data) {
+            data = JSON.stringify(initialProjectData);
+            localStorage.setItem("al_share3_al_kabeer_master_v1", data);
+        }
+        return JSON.parse(data);
+    }
+
+    function saveProjectData(data) {
+        localStorage.setItem("al_share3_al_kabeer_master_v1", JSON.stringify(data));
+        renderStreet();
+        applyTheme();
+    }
+
+    // تطبيق الثيم والألوان المخصصة
+    function applyTheme() {
+        const data = getProjectData();
+        const root = document.documentElement;
+        root.style.setProperty('--primary-bg', data.theme.bg);
+        root.style.setProperty('--street-color', data.theme.street);
+        root.style.setProperty('--street-line', data.theme.accent);
+        root.style.setProperty('--accent-gold', data.theme.accent);
+        root.style.setProperty('--card-bg', data.theme.card);
+    }
+
+    // عرض الشارع والمحلات على الصفين
+    function renderStreet() {
+        const data = getProjectData();
+        const rightCol = document.getElementById("right-column-shops");
+        const leftCol = document.getElementById("left-column-shops");
+
+        rightCol.innerHTML = "";
+        leftCol.innerHTML = "";
+
+        data.shops.forEach(shop => {
+            const badgeClass = shop.status === 'active' ? 'badge-active' : 'badge-paused';
+            const badgeText = shop.status === 'active' ? 'مفتوح' : 'صيانة';
+
+            const cardHTML = `
+                <div class="shop-card">
+                    <div class="shop-banner-box">
+                        <img src="${shop.banner}" alt="${shop.name}" onerror="this.src='https://images.unsplash.com/photo-1543353071-10c8ba85a904?auto=format&fit=crop&w=600&q=80'">
+                        <span class="shop-status-badge ${badgeClass}">${badgeText}</span>
+                    </div>
+                    <div class="shop-body">
+                        <div>
+                            <div class="shop-title">${shop.name}</div>
+                            <div class="shop-desc">${shop.desc}</div>
+                        </div>
+                        <button class="btn-enter-shop" onclick="launchShopApp('${shop.id}')">${shop.btnText}</button>
+                    </div>
+                </div>
+            `;
+
+            if(shop.side === "right") {
+                rightCol.innerHTML += cardHTML;
+            } else {
+                leftCol.innerHTML += cardHTML;
+            }
+        });
+    }
+
+    // تشغيل تطبيق المحل داخل النافذة التفاعلية
+    function launchShopApp(shopId) {
+        const data = getProjectData();
+        const shop = data.shops.find(s => s.id === shopId);
+        if(!shop) return;
+
+        if(shop.status === "paused") {
+            alert(`⚠️ ${shop.name}:\n\n${shop.pauseMsg}`);
+            return;
+        }
+
+        document.getElementById("app-modal-title").innerText = shop.name;
+        
+        // بناء كود التطبيق المدمج بداخل الـ Iframe ديناميكياً مع ربطه بـ localStorage المعزول برقم المحل
+        const iframe = document.getElementById("app-iframe");
+        const shopAppHTML = generateSingleShopAppHTML(shop.id, shop.name, shop.pass);
+        
+        iframe.srcdoc = shopAppHTML;
+        document.getElementById("app-modal").style.display = "flex";
+    }
+
+    function closeAppModal() {
+        document.getElementById("app-modal").style.display = "none";
+        document.getElementById("app-iframe").srcdoc = "";
+    }
+
+    // فتح وغلق لوحة تحكم مدير المشروع
+    function openMasterLogin() {
+        const data = getProjectData();
+        const pass = prompt("أدخل كلمة سر مدير المشروع:");
+        if(pass === data.masterPass) {
+            setupMasterCPView();
+            document.getElementById("master-cp-modal").style.display = "flex";
+        } else if(pass !== null) {
+            alert("كلمة السر غير صحيحة!");
+        }
+    }
+
+    function closeMasterCP() {
+        document.getElementById("master-cp-modal").style.display = "none";
+    }
+
+    function setupMasterCPView() {
+        const data = getProjectData();
+        document.getElementById("cp-color-bg").value = data.theme.bg;
+        document.getElementById("cp-color-street").value = data.theme.street;
+        document.getElementById("cp-color-accent").value = data.theme.accent;
+        document.getElementById("cp-color-card").value = data.theme.card;
+        document.getElementById("cp-master-pass").value = data.masterPass;
+
+        renderShopsTable();
+    }
+
+    function renderShopsTable() {
+        const data = getProjectData();
+        const tbody = document.getElementById("cp-shops-table-body");
+        tbody.innerHTML = "";
+
+        data.shops.forEach((shop, index) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td><strong>${shop.name}</strong></td>
+                    <td>${shop.side === 'right' ? 'اليمين' : 'الشمال'}</td>
+                    <td><code>${shop.pass}</code></td>
+                    <td>${shop.status === 'active' ? '🟢 شغال' : '🔴 متوقف'}</td>
+                    <td>
+                        <button onclick="moveShop(${index}, -1)" style="cursor:pointer;">⬆</button>
+                        <button onclick="moveShop(${index}, 1)" style="cursor:pointer;">⬇</button>
+                    </td>
+                    <td>
+                        <button class="btn-action-cp" style="padding:4px 8px; font-size:0.75rem;" onclick="openEditShop('${shop.id}')">تعديل ✏️</button>
+                        <button class="btn-action-cp btn-danger-cp" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteShop('${shop.id}')">حذف 🗑️</button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    // أفعال لوحة التحكم
+    function saveThemeSettings() {
+        const data = getProjectData();
+        data.theme.bg = document.getElementById("cp-color-bg").value;
+        data.theme.street = document.getElementById("cp-color-street").value;
+        data.theme.accent = document.getElementById("cp-color-accent").value;
+        data.theme.card = document.getElementById("cp-color-card").value;
+        saveProjectData(data);
+        alert("تم حفظ وتطبيق ألوان المشروع بنجاح!");
+    }
+
+    function saveMasterPass() {
+        const newPass = document.getElementById("cp-master-pass").value.trim();
+        if(!newPass) return;
+        const data = getProjectData();
+        data.masterPass = newPass;
+        saveProjectData(data);
+        alert("تم تغيير كلمة سر مدير المشروع بنجاح!");
+    }
+
+    function addNewShop() {
+        const name = document.getElementById("new-shop-name").value.trim();
+        if(!name) { alert("يرجى كتابة اسم المحل!"); return; }
+
+        const data = getProjectData();
+        const newId = "shop_" + Date.now();
+        
+        data.shops.push({
+            id: newId,
+            name: name,
+            side: document.getElementById("new-shop-side").value,
+            banner: document.getElementById("new-shop-banner").value || "https://images.unsplash.com/photo-1543353071-10c8ba85a904?auto=format&fit=crop&w=600&q=80",
+            desc: document.getElementById("new-shop-desc").value || "محل جديد بالشارع الكبير",
+            btnText: document.getElementById("new-shop-btn").value || "دخول المحل 🏬",
+            pass: "imo",
+            status: "active",
+            pauseMsg: "المحل مغلق مؤقتاً للصيانة"
+        });
+
+        saveProjectData(data);
+        setupMasterCPView();
+        alert("تم إضافة المحل الجديد إلى الشارع الكبير بنجاح!");
+        document.getElementById("new-shop-name").value = "";
+    }
+
+    function moveShop(index, direction) {
+        const data = getProjectData();
+        const targetIndex = index + direction;
+        if(targetIndex < 0 || targetIndex >= data.shops.length) return;
+
+        const temp = data.shops[index];
+        data.shops[index] = data.shops[targetIndex];
+        data.shops[targetIndex] = temp;
+
+        saveProjectData(data);
+        setupMasterCPView();
+    }
+
+    function deleteShop(shopId) {
+        if(!confirm("هل أنت متأكد من حذف هذا المحل نهائياً من الشارع الكبير؟")) return;
+        const data = getProjectData();
+        data.shops = data.shops.filter(s => s.id !== shopId);
+        saveProjectData(data);
+        setupMasterCPView();
+    }
+
+    function openEditShop(shopId) {
+        const data = getProjectData();
+        const shop = data.shops.find(s => s.id === shopId);
+        if(!shop) return;
+
+        document.getElementById("edit-shop-id").value = shop.id;
+        document.getElementById("edit-shop-title-label").innerText = shop.name;
+        document.getElementById("edit-shop-name").value = shop.name;
+        document.getElementById("edit-shop-side").value = shop.side;
+        document.getElementById("edit-shop-banner").value = shop.banner;
+        document.getElementById("edit-shop-desc").value = shop.desc;
+        document.getElementById("edit-shop-btn").value = shop.btnText;
+        document.getElementById("edit-shop-pass").value = shop.pass;
+        document.getElementById("edit-shop-status").value = shop.status;
+        document.getElementById("edit-shop-pause-msg").value = shop.pauseMsg;
+
+        document.getElementById("edit-shop-box").style.display = "block";
+    }
+
+    function cancelShopEdit() {
+        document.getElementById("edit-shop-box").style.display = "none";
+    }
+
+    function saveShopEdit() {
+        const shopId = document.getElementById("edit-shop-id").value;
+        const data = getProjectData();
+        const shop = data.shops.find(s => s.id === shopId);
+        if(!shop) return;
+
+        shop.name = document.getElementById("edit-shop-name").value;
+        shop.side = document.getElementById("edit-shop-side").value;
+        shop.banner = document.getElementById("edit-shop-banner").value;
+        shop.desc = document.getElementById("edit-shop-desc").value;
+        shop.btnText = document.getElementById("edit-shop-btn").value;
+        shop.pass = document.getElementById("edit-shop-pass").value;
+        shop.status = document.getElementById("edit-shop-status").value;
+        shop.pauseMsg = document.getElementById("edit-shop-pause-msg").value;
+
+        saveProjectData(data);
+        setupMasterCPView();
+        cancelShopEdit();
+        alert("تم حفظ تعديلات المحل بنجاح!");
+    }
+
+    // توليد كود التطبيق المكتمل مع العزل والـ LocalStorage الفريد لكل محل
+    function generateSingleShopAppHTML(storeId, storeName, storePass) {
+        return `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${storeName}</title>
+    <style>
+        :root { --primary-color: #d97706; --secondary-color: #1e293b; --accent-color: #ef4444; --bg-color: #f8fafc; --text-color: #334155; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+        #app-container { max-width: 480px; margin: 0 auto; background: #fff; min-height: 100vh; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.1); padding-bottom: 70px; }
+        .header { background: var(--secondary-color); color: #fff; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 900; }
+        .header-icon-btn { background: rgba(255,255,255,0.1); border: none; color: #fff; font-size: 1.1rem; cursor: pointer; padding: 6px 10px; border-radius: 8px; position: relative; }
+        .cart-badge-count { position: absolute; top: -3px; right: -3px; background: var(--accent-color); color: #fff; font-size: 0.65rem; padding: 1px 5px; border-radius: 10px; font-weight: bold; }
+        .sticky-top-section { position: sticky; top: 52px; z-index: 850; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.06); }
+        .banner-container { width: 100%; height: 150px; overflow: hidden; position: relative; background: #000; }
+        .banner-container img { width: 100%; height: 100%; object-fit: cover; }
+        .banner-text { position: absolute; bottom: 0; background: linear-gradient(transparent, rgba(0,0,0,0.85)); width: 100%; color: #fff; padding: 8px; text-align: center; font-size: 0.9rem; font-weight: bold; }
+        .marquee-bar { background: var(--primary-color); color: #fff; padding: 4px 0; font-size: 0.8rem; font-weight: bold; }
+        .categories-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 12px; }
+        .cat-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center; cursor: pointer; border: 1px solid #e2e8f0; }
+        .cat-card img { width: 100%; height: 85px; object-fit: cover; }
+        .cat-card h4 { font-size: 0.8rem; padding: 6px 2px; color: var(--secondary-color); font-weight: bold; }
+        .view-section { display: none; padding: 12px; }
+        .view-section.active { display: block; }
+        .sub-card { display: flex; background: #fff; border-radius: 10px; overflow: hidden; margin-bottom: 10px; border: 1px solid #f1f5f9; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+        .sub-card img { width: 100px; height: 100px; object-fit: cover; }
+        .sub-info { padding: 8px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .sub-info h5 { font-size: 0.9rem; color: var(--secondary-color); font-weight: bold; }
+        .sub-info p { font-size: 0.75rem; color: #64748b; }
+        .price { color: var(--accent-color); font-weight: bold; font-size: 0.9rem; }
+        .btn-order { background: var(--primary-color); color: #fff; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
+        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: #fff; border-top: 1px solid #cbd5e1; display: flex; justify-content: space-around; padding: 8px 0; z-index: 1000; }
+        .nav-item { background: none; border: none; cursor: pointer; color: #64748b; font-size: 0.8rem; display: flex; flex-direction: column; align-items: center; }
+        .nav-item.active { color: var(--primary-color); font-weight: bold; }
+        .form-group { margin-bottom: 10px; }
+        .form-group label { display: block; font-size: 0.8rem; margin-bottom: 3px; font-weight: bold; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 7px; border: 1px solid #cbd5e1; border-radius: 5px; font-size: 0.85rem; }
+        .btn-action { background: var(--primary-color); color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 6px; }
+        .btn-back { background: #64748b; }
+        .btn-danger { background: #ef4444; }
+    </style>
+</head>
+<body>
+<div id="app-container">
+    <div class="header">
+        <div>🏪 <strong>${storeName}</strong></div>
+        <div>
+            <button class="header-icon-btn" onclick="switchView('home-view')">🏠</button>
+            <button class="header-icon-btn" onclick="switchView('login-view')">⚙️</button>
+        </div>
+    </div>
+
+    <div class="sticky-top-section">
+        <div class="banner-container">
+            <img id="main-banner-img" src="" alt="بنر">
+            <div class="banner-text" id="main-banner-title"></div>
+        </div>
+        <div class="marquee-bar"><marquee behavior="scroll" direction="right">🔥 أهلاً بكم في ${storeName} - تصفح العروض والمنتجات واطلب مباشرة عبر الواتساب! 🚀</marquee></div>
+    </div>
+
+    <div id="home-view" class="view-section active">
+        <div class="categories-grid" id="categories-grid"></div>
+    </div>
+
+    <div id="sub-view" class="view-section">
+        <button class="btn-action btn-back" style="width:auto; padding:4px 10px; margin-bottom:10px;" onclick="switchView('home-view')">⬅ عودة</button>
+        <h3 id="current-cat-title" style="margin-bottom:10px; border-bottom:2px solid var(--primary-color);"></h3>
+        <div id="subtypes-list"></div>
+    </div>
+
+    <div id="login-view" class="view-section">
+        <h3>تسجيل دخول لوحة التحكم</h3>
+        <div class="form-group" style="margin-top:15px;">
+            <label>كلمة المرور:</label>
+            <input type="password" id="login-password" placeholder="أدخل كلمة المرور...">
+        </div>
+        <button class="btn-action" onclick="verifyLogin()">دخول</button>
+    </div>
+
+    <div id="admin-cp-view" class="view-section">
+        <h3 style="display:flex; justify-content:space-between; align-items:center;">
+            <span>لوحة تحكم المحل</span>
+            <button onclick="addNewCategoryPrompt()" style="background:#0284c7; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">+ ركن جديد</button>
+        </h3>
+        <div class="form-group" style="margin-top:10px;">
+            <label>اختر الركن للتعديل:</label>
+            <select id="cp-cat-select" onchange="loadCpSubtypes()"></select>
+        </div>
+        <div class="form-group"><label>اسم الركن:</label><input type="text" id="cp-cat-name"></div>
+        <div class="form-group"><label>صورة الركن (رابط):</label><input type="text" id="cp-cat-img"></div>
+        <button class="btn-action btn-danger" onclick="deleteCurrentCategory()">حذف الركن بالكامل 🗑️</button>
+        <hr style="margin:10px 0;">
+        <div id="cp-subtypes-editor"></div>
+        <button class="btn-action" style="background:#10b981;" onclick="saveAdminChanges()">حفظ التعديلات</button>
+        
+        <hr style="margin:15px 0;">
+        <h4>تغيير كلمة سر هذا المحل:</h4>
+        <div class="form-group"><input type="text" id="new-store-pass" placeholder="كلمة السر الجديدة..."></div>
+        <button class="btn-action" onclick="changeStorePass()">تحديث كلمة السر 🔐</button>
+    </div>
+
+    <div class="bottom-nav">
+        <button class="nav-item active" onclick="switchView('home-view')">🏠 الرئيسية</button>
+        <button class="nav-item" onclick="switchView('login-view')">⚙️ لوحة التحكم</button>
+    </div>
+</div>
+
+<script>
+    const STORAGE_KEY = "shop_app_data_${storeId}";
+    const DEFAULT_PASS = "${storePass}";
+
+    const defaultData = {
+        adminPass: DEFAULT_PASS,
+        bannerImg: "https://images.unsplash.com/photo-1543353071-10c8ba85a904?auto=format&fit=crop&w=800&q=80",
+        bannerTitle: "أهلاً بكم في ${storeName}",
+        categories: [
+            { id: 1, name: "القسم الرئيسي", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=400&q=80", subtypes: [
+                { name: "منتج تجريبي 1", desc: "وصف المنتج هنا", price: "50 ج.م", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80" }
+            ]}
+        ]
+    };
+
+    function getAppData() {
+        let data = localStorage.getItem(STORAGE_KEY);
+        if(!data) {
+            data = JSON.stringify(defaultData);
+            localStorage.setItem(STORAGE_KEY, data);
+        }
+        return JSON.parse(data);
+    }
+
+    function saveAppData(data) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        initApp();
+    }
+
+    function initApp() {
+        const data = getAppData();
+        document.getElementById("main-banner-img").src = data.bannerImg;
+        document.getElementById("main-banner-title").innerText = data.bannerTitle;
+
+        const grid = document.getElementById("categories-grid");
+        grid.innerHTML = "";
+        data.categories.forEach(cat => {
+            grid.innerHTML += \`<div class="cat-card" onclick="openCategory(\${cat.id})">
+                <img src="\${cat.img}">
+                <h4>\${cat.name}</h4>
+            </div>\`;
+        });
+    }
+
+    function openCategory(catId) {
+        const data = getAppData();
+        const cat = data.categories.find(c => c.id === catId);
+        if(!cat) return;
+
+        document.getElementById("current-cat-title").innerText = cat.name;
+        const subList = document.getElementById("subtypes-list");
+        subList.innerHTML = "";
+        cat.subtypes.forEach(sub => {
+            subList.innerHTML += \`<div class="sub-card">
+                <img src="\${sub.img}">
+                <div class="sub-info">
+                    <div><h5>\${sub.name}</h5><p>\${sub.desc}</p></div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="price">\${sub.price}</span>
+                        <button class="btn-order" onclick="alert('تم طلب \${sub.name}')">اطلب الآن</button>
+                    </div>
+                </div>
+            </div>\`;
+        });
+        switchView('sub-view');
+    }
+
+    function switchView(viewId) {
+        document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+        document.getElementById(viewId).classList.add('active');
+    }
+
+    function verifyLogin() {
+        const pass = document.getElementById("login-password").value;
+        const data = getAppData();
+        if(pass === data.adminPass || pass === "${storePass}") {
+            setupAdminCP(data);
+            switchView('admin-cp-view');
+        } else {
+            alert("كلمة المرور غير صحيحة!");
+        }
+    }
+
+    function setupAdminCP(data) {
+        const select = document.getElementById("cp-cat-select");
+        select.innerHTML = "";
+        data.categories.forEach(cat => { select.innerHTML += \`<option value="\${cat.id}">\${cat.name}</option>\`; });
+        loadCpSubtypes();
+    }
+
+    function loadCpSubtypes() {
+        const data = getAppData();
+        const catId = document.getElementById("cp-cat-select").value;
+        const cat = data.categories.find(c => c.id == catId);
+        if(!cat) return;
+        document.getElementById("cp-cat-name").value = cat.name;
+        document.getElementById("cp-cat-img").value = cat.img;
+    }
+
+    function saveAdminChanges() {
+        const data = getAppData();
+        const catId = document.getElementById("cp-cat-select").value;
+        const cat = data.categories.find(c => c.id == catId);
+        if(cat) {
+            cat.name = document.getElementById("cp-cat-name").value;
+            cat.img = document.getElementById("cp-cat-img").value;
+            saveAppData(data);
+            alert("تم حفظ التعديلات بالمحل!");
+        }
+    }
+
+    function changeStorePass() {
+        const newP = document.getElementById("new-store-pass").value.trim();
+        if(!newP) return;
+        const data = getAppData();
+        data.adminPass = newP;
+        saveAppData(data);
+        alert("تم تغيير كلمة سر المحل بنجاح!");
+    }
+
+    window.onload = initApp;
+<\/script>
+</body>
+</html>`;
+    }
+
+    // التشغيل المبدئي للشارع عند تحميل الصفحة
+    window.onload = function() {
+        renderStreet();
+        applyTheme();
+    };
+</script>
+</body>
+</html>
